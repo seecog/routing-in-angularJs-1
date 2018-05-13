@@ -1,0 +1,57 @@
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+</head>
+<body ng-app="myApp">
+<a href="#!">Home</a> | 
+<a href="#!contact">Contact</a> 
+<hr>
+<div ng-view></div>
+
+</body>
+<script>
+var app = angular.module("myApp",['ngRoute']);
+app.config(function($routeProvider){
+
+$routeProvider
+.when('/',{
+templateUrl : "./employees.html",
+controller : "employeesController"
+})
+.when('/contact',{
+templateUrl : './contact1.html',
+controller : "ContactController"
+})
+.when('/info/:id',{
+templateUrl : './info.html',
+controller : "InfoController"
+})
+});
+
+app.controller("employeesController",function($scope,$http){
+$http.get("https://employee-7744d.firebaseio.com/employee.json").then(function(res){
+$scope.data = res.data;
+console.log("The data is ",res)
+})
+.catch(function(err){
+console.log('The error s ',err)
+});
+});
+app.controller("ContactController",function($scope){
+console.log("Inside the contact")
+});
+app.controller("InfoController",function($scope,$routeParams,$http){
+console.log("Inside the info ",$routeParams.id)
+$http.get("https://employee-7744d.firebaseio.com/employee/"+$routeParams.id+".json").then(function(res){
+$scope.data = res.data;
+console.log("The data is ",res)
+})
+.catch(function(err){
+console.log('The error s ',err)
+});
+});
+
+</script>
+</html>

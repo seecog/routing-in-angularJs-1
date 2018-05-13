@@ -1,0 +1,10 @@
+
+
+<table>
+<th>Age</th><th>Name</th><th>Salary</th>
+<tr ng-repeat="(key,value) in data">
+<td>{{value.age}}</td>
+<td><a href="#!info/{{key}}">{{value.name}}</a></td>
+<td>{{value.salary}}</td>
+</tr>
+</table>
